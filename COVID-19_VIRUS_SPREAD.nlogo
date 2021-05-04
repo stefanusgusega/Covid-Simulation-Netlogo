@@ -20,19 +20,22 @@ to setup-turtles
   create-turtles init-population [
     set color blue
     set shape "person"
-    set size 2
+    set size 1.5
     set infected? false
     set immune? false
     set stationary? false
     setxy random-pxcor random-pycor
+    ;; make pop/clus people white-colored
+    ask n-of (init-population / init-cluster) turtles [
+      set color pink
+    ]
   ]
 end
 
 to setup-infected
   ask n-of init-infected turtles [
-   set color red
+
    set infected? true
-   setxy 0 0
   ]
 end
 
@@ -223,7 +226,7 @@ init-population
 init-population
 1
 1000
-210.0
+1.0
 1
 1
 NIL
@@ -352,7 +355,7 @@ stationary
 stationary
 0
 1000
-83.0
+0.0
 1
 1
 NIL
@@ -367,7 +370,7 @@ init-immune
 init-immune
 0
 1000
-38.0
+19.0
 1
 1
 NIL
@@ -468,6 +471,21 @@ false
 "" ""
 PENS
 "default" 1.0 0 -16777216 true "" "plot num-dead"
+
+SLIDER
+713
+10
+885
+43
+init-cluster
+init-cluster
+1
+5
+5.0
+1
+1
+NIL
+HORIZONTAL
 
 @#$#@#$#@
 ## WHAT IS IT?

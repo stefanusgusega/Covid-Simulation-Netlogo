@@ -72,7 +72,7 @@ to go
   recover-infected
   recolor
   move
-  calculate-%-max-infected
+  calculate%-max-infected
   tick
 end
 
@@ -298,7 +298,7 @@ MONITOR
 1067
 59
 NIL
-%-max-infected
+max-infected-prop
 5
 1
 11
@@ -309,7 +309,7 @@ MONITOR
 1066
 108
 NIL
-%-uninfected
+prop-uninfected
 17
 1
 11
