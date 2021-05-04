@@ -8,6 +8,7 @@ globals [
 turtles-own[
   infected?
   immune?
+  vaccine?
 ]
 
 to setup
@@ -16,7 +17,7 @@ to setup
   setup-cluster
   setup-turtles
   setup-infected
-  setup-immune
+  setup-vaccine
   set max-infected (count turtles with [infected?])
   reset-ticks
 end
@@ -37,13 +38,14 @@ to setup-turtles
     set size 2
     set infected? false
     set immune? false
+    set vaccine? false
     setxy random-pxcor random-pycor
   ]
 end
 
 to setup-infected
   let num-infected (init-infected / 100 * init-population)
-  ask n-of num-infected turtles [
+  ask n-of num-infected turtles with [not vaccine?] [
    let cluster (random init-cluster)
    let random-radius-x (item (random 6) radius-range)
    let random-radius-y (item (random 6) radius-range)
@@ -53,9 +55,10 @@ to setup-infected
   ]
 end
 
-to setup-immune
-  let num-immune (init-immune / 100 * init-population)
-  ask n-of num-immune turtles[
+to setup-vaccine
+  let num-vaccine (vaccinated-pop / 100 * init-population)
+  ask n-of num-vaccine turtles with [not infected?] [
+    set vaccine? true
     set immune? true
     set color grey
   ]
@@ -91,21 +94,13 @@ to recolor
 end
 
 to recover-infected ;;I -> R
-  if recover? [
-    ask turtles with [infected?]
+  ask turtles with [infected?]
+  [
+    if random-float 1 < recovery.rate
     [
-      if random-float 1 < recovery.rate
-      [
-        set infected? false
-        ifelse immunity?
-        [
-          set immune? true
-          set color gray
-        ]
-        [
-          set color blue
-        ]
-      ]
+      set infected? false
+      set immune? true
+      set color gray
     ]
   ]
 end
@@ -137,7 +132,19 @@ to-report %-max-infected
 end
 
 to-report %-uninfected
+  report ((count turtles with [not infected?]) + (count turtles with [vaccine?]) - (count turtles with [immune?])) / init-population * 100
+end
+
+to-report %-uninfected-unvaccinated
   report (count turtles with [not infected? and not immune?]) / init-population * 100
+end
+
+to-report max-vaccinated
+  report (100 - init-infected)
+end
+
+to-report max-infect
+  report (100 - vaccinated-pop)
 end
 @#$#@#$#@
 GRAPHICS-WINDOW
@@ -210,7 +217,7 @@ init-population
 init-population
 1
 1000
-494.0
+1000.0
 1
 1
 NIL
@@ -225,7 +232,7 @@ init-infected
 init-infected
 1
 100
-50.0
+5.0
 1
 1
 NIL
@@ -281,17 +288,6 @@ PENS
 "susceptible" 100.0 0 -16777216 true "" "plot (count turtles with [not infected? and not immune?]) / init-population * 100"
 "immune" 100.0 0 -7500403 true "" "plot (count turtles with [immune?]) / init-population * 100"
 
-SWITCH
-24
-445
-196
-478
-immunity?
-immunity?
-0
-1
--1000
-
 MONITOR
 933
 14
@@ -315,25 +311,25 @@ NIL
 11
 
 SLIDER
-23
-482
-195
-515
-init-immune
-init-immune
+28
+238
+200
+271
+vaccinated-pop
+vaccinated-pop
 0
-100
-0.0
+max-vaccinated
+5.0
 1
 1
 NIL
 HORIZONTAL
 
 MONITOR
-1007
-115
-1078
-160
+933
+114
+1004
+159
 NIL
 population
 17
@@ -341,10 +337,10 @@ population
 11
 
 SLIDER
-24
-582
-196
-615
+26
+273
+198
+306
 init-cluster
 init-cluster
 1
@@ -355,22 +351,11 @@ init-cluster
 NIL
 HORIZONTAL
 
-SWITCH
-26
-250
-199
-283
-recover?
-recover?
-0
-1
--1000
-
 SLIDER
 26
-292
+203
 198
-325
+236
 recovery.rate
 recovery.rate
 0
@@ -382,10 +367,10 @@ NIL
 HORIZONTAL
 
 SLIDER
-24
-654
-196
-687
+21
+310
+193
+343
 quarantine.effort
 quarantine.effort
 0
@@ -397,15 +382,26 @@ NIL
 HORIZONTAL
 
 INPUTBOX
-27
-718
-198
-778
+573
+344
+744
+404
 max-days
 40.0
 1
 0
 Number
+
+MONITOR
+755
+351
+922
+396
+%-uninfected-unvaccinated
+%-uninfected-unvaccinated
+17
+1
+11
 
 @#$#@#$#@
 ## WHAT IS IT?
@@ -813,7 +809,7 @@ false
 Polygon -7500403 true true 270 75 225 30 30 225 75 270
 Polygon -7500403 true true 30 75 75 30 270 225 225 270
 @#$#@#$#@
-NetLogo 6.1.1
+NetLogo 6.2.0
 @#$#@#$#@
 @#$#@#$#@
 @#$#@#$#@
