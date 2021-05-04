@@ -232,7 +232,7 @@ init-infected
 init-infected
 1
 100
-5.0
+50.0
 1
 1
 NIL
@@ -277,7 +277,7 @@ infection
 day
 % infected
 0.0
-10.0
+100.0
 0.0
 100.0
 true
@@ -319,7 +319,7 @@ vaccinated-pop
 vaccinated-pop
 0
 max-vaccinated
-5.0
+0.0
 1
 1
 NIL
@@ -360,7 +360,7 @@ recovery.rate
 recovery.rate
 0
 1
-0.057
+0.0
 0.001
 1
 NIL
@@ -710,7 +710,7 @@ false
 Polygon -7500403 true true 270 75 225 30 30 225 75 270
 Polygon -7500403 true true 30 75 75 30 270 225 225 270
 @#$#@#$#@
-NetLogo 6.2.0
+NetLogo 6.1.1
 @#$#@#$#@
 @#$#@#$#@
 @#$#@#$#@

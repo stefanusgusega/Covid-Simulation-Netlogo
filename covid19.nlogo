@@ -232,7 +232,7 @@ init-infected
 init-infected
 1
 100
-5.0
+50.0
 1
 1
 NIL
@@ -277,16 +277,16 @@ infection
 day
 % infected
 0.0
-10.0
+100.0
 0.0
 100.0
 true
 true
 "" ""
 PENS
-"infected" 100.0 0 -2674135 true "" "plot (count turtles with [infected?]) / init-population * 100"
-"susceptible" 100.0 0 -16777216 true "" "plot (count turtles with [not infected? and not immune?]) / init-population * 100"
-"immune" 100.0 0 -7500403 true "" "plot (count turtles with [immune?]) / init-population * 100"
+"infected" 1.0 0 -2674135 true "" "plot (count turtles with [infected?]) / init-population * 100"
+"susceptible" 1.0 0 -16777216 true "" "plot (count turtles with [not infected? and not immune?]) / init-population * 100"
+"immune" 1.0 0 -7500403 true "" "plot (count turtles with [immune?]) / init-population * 100"
 
 MONITOR
 933
@@ -319,7 +319,7 @@ vaccinated-pop
 vaccinated-pop
 0
 max-vaccinated
-5.0
+0.0
 1
 1
 NIL
@@ -360,7 +360,7 @@ recovery.rate
 recovery.rate
 0
 1
-0.057
+0.038
 0.001
 1
 NIL
@@ -710,7 +710,7 @@ false
 Polygon -7500403 true true 270 75 225 30 30 225 75 270
 Polygon -7500403 true true 30 75 75 30 270 225 225 270
 @#$#@#$#@
-NetLogo 6.2.0
+NetLogo 6.1.1
 @#$#@#$#@
 @#$#@#$#@
 @#$#@#$#@
